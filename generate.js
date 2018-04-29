@@ -26,9 +26,6 @@ var HttpClient = function() {
         var anHttpRequest = new XMLHttpRequest();
         anHttpRequest.withCredentials = true;
         anHttpRequest.open(this.method, this.url, true);
-        anHttpRequest.setRequestHeader("Referer", "https://api.bilibili.com");
-        anHttpRequest.setRequestHeader("Access-Control-Allow-Headers", "X-Requested-With");
-        anHttpRequest.setRequestHeader("Access-Control-Allow-Origin", "true");
         anHttpRequest.onreadystatechange = function() { 
             if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
                 aCallback(anHttpRequest.responseText);
@@ -58,15 +55,26 @@ console.log(uid);
 
 if (svc.replace(/(^\s*)|(\s*$)/g, "").length !=0 && uid[0].length !=0) {
 //regex to match clips number (which p)
-var patternVideoP = new RegExp("/\?p=(\d+)/g");
-var arraynum = patternVideoP - 1;
-var requestURL = 'https://api.bilibili.com/x/player/pagelist?aid=' + uid + '&jsonp=jsonp';
+var patternVideoP = new RegExp(/\?p=(\d+)/g);
+var whichP = patternVideoP.exec(bar);
+if (whichP) {
+
+    arraynum = whichP[1];
+} else {
+    arraynum = "";
+}
+////debugging
+console.log(whichP);
+console.log(arraynum);
+////debugging
+
+var requestURL = 'api.php?aid=' + uid + '&p=' + arraynum;
 var idn = makeid();
 var idcf = idn;
 var client = new HttpClient();
 client.get(requestURL, function(response) {
     var object = JSON.parse(response);
-    var cid = object.data[arraynum].cid;
+    var cid = object.cid;
 });
 
 var preOutput = "<iframe id=" + idcf + " src=\"//player.bilibili.com/player.html?aid=" + uid + "&cid=" + cid + "&page=" + arraynum + " scrolling=\"no\" border=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\"> </iframe>"

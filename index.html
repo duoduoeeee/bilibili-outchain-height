@@ -61,12 +61,6 @@
           var inputwidth = document.getElementById('width').value;
           var inputheight = document.getElementById('height').value;
           var cb = document.getElementById('width100').value;
-          //process checkbox onclick event
-          if (document.getElementById('width100').checked) {
-            var cb = this.value;
-          } else {
-            var cb = this.value;
-          }
           
           var embedCode = processInput(input, inputwidth, inputheight, cb);
           document.getElementById("codebar").value = embedCode;
