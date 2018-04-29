@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Min!</title>
+    <link rel="stylesheet" href="min/min.css">
+  </head>
+  <body>
+  <section class="container">
+    <div class=row>
+        <div class="col c12">
+        <h1>What would you like to embed?</h1>
+        </div>
+    </div>
+    <div class=row>
+        <div class="col c12">
+        <h4>This is for utilizing the official Bilibili embed player. For other uses, please refer to.</h4>
+        </div>
+    </div>
+    <div class=row>
+        <div class="col c6">
+        <p>Input video URL below...</p>
+        </div>
+        <div class="col c6">
+        <p>...and copy the code provided below.</p>
+        </div>
+    </div>
+    <div class=row>
+        <div class="col c6">
+        <input type="text" id="inputbar" placeholder="inputbar" class="smooth" style="width:85%;" oninput="myFunction();">
+        </div>
+        <div class="col c6">
+        <input type="text" id="codebar" placeholder="codebar" class="smooth" style="width:85%;" placeholder="codebar" disabled>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col c6">
+        <input type="text" id="width" placeholder="width" class="smooth" style="width:3em;">
+        <div style="display:inline;">x</div>
+        <input type="text" id="height" placeholder="height" class="smooth" style="width:3em;">
+        <label style="margin-left:2em; 
+                      font-family:monospace;
+                      margin-right:1em;"><input type="checkbox" id="width100" onclick = "myFunction();">max-width:100%;</label>
+        <a id=update class="btn btn-a btn-sm smooth" href="#" onclick = "myFunction();">Update</a>
+        </div>
+        <div class="col c6" id="preview">
+        preview area placeholder. id:preview
+        </div>
+    </div>
+    <div class=row>
+      <div class="col c12">
+      <center><p style="color:grey;">bilibili as well as 哔哩哔哩 are registered trademarks of BILIBILI INC.</p></center>
+      </div>
+  </div>
+  </section>
+  <script type="application/javascript" src="generate.js"></script>
+  <script>
+        function myFunction() {
+          var input = document.getElementById("inputbar").value;
+          var inputwidth = document.getElementById('width').value;
+          var inputheight = document.getElementById('height').value;
+          var cb = document.getElementById('width100').value;
+          //process checkbox onclick event
+          if (document.getElementById('width100').checked) {
+            var cb = this.value;
+          } else {
+            var cb = this.value;
+          }
+          
+          var embedCode = processInput(input, inputwidth, inputheight, cb);
+          document.getElementById("codebar").value = embedCode;
+        }
+      </script>
+      
+  </body>
+</html>
