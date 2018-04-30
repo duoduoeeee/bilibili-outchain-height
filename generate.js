@@ -97,7 +97,7 @@ function processRequest(e) {
     if (makeHttpRequest.readyState == 4 && makeHttpRequest.status == 200) {
         var cid = JSON.parse(makeHttpRequest.responseText);
         console.log(cid.cid);
-        var embedCode = "<iframe id=" + idcf + " src=\"//player.bilibili.com/player.html?aid=" + uid + "&cid=" + cid.cid + "&page=" + arraynum + " scrolling=\"no\" border=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\"" + " style=\"width: " + width + "px; height: " + height + "px; max-width: 100%" + "\"> </iframe>";
+        var embedCode = "<iframe id=" + idcf + " src=\"//player.bilibili.com/player.html?aid=" + uid + "&cid=" + cid.cid + "&page=" + arraynum + "\" scrolling=\"no\" border=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\"" + " style=\"width: " + width + "px; height: " + height + "px; max-width: 100%" + "\"> </iframe>";
         document.getElementById("codebar").value = embedCode;
         document.getElementById("preview").innerHTML = embedCode;
     }
