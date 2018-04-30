@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Min!</title>
+    <title>Bilibili Publish center</title>
     <link rel="stylesheet" href="min/min.css">
   </head>
   <body>
@@ -15,7 +15,7 @@
     </div>
     <div class=row>
         <div class="col c12">
-        <h4>This is for utilizing the official Bilibili embed player. For other uses, please refer to.</h4>
+        <h4>This is for utilizing the official Bilibili embed player. For the unofficial resource cards, please refer to <a href="/">badges.duoee.cn</a>.</h4>
         </div>
     </div>
     <div class=row>
@@ -23,7 +23,7 @@
         <p>Input video URL below...</p>
         </div>
         <div class="col c6">
-        <p>...and copy the code provided below.</p>
+        <p>...and copy the code provided down here.</p>
         </div>
     </div>
     <div class=row>
@@ -31,7 +31,7 @@
         <input type="text" id="inputbar" placeholder="inputbar" class="smooth" style="width:85%;" oninput="myFunction();">
         </div>
         <div class="col c6">
-        <input type="text" id="codebar" placeholder="codebar" class="smooth" style="width:85%;" placeholder="codebar" disabled>
+        <input type="text" id="codebar" placeholder="codebar" class="smooth" style="width:85%;" placeholder="codebar" readonly="">
         </div>
     </div>
     <div class="row">
@@ -39,13 +39,10 @@
         <input type="text" id="width" placeholder="width" class="smooth" style="width:3em;">
         <div style="display:inline;">x</div>
         <input type="text" id="height" placeholder="height" class="smooth" style="width:3em;">
-        <label style="margin-left:2em; 
-                      font-family:monospace;
-                      margin-right:1em;"><input type="checkbox" id="width100" onclick = "myFunction();">max-width:100%;</label>
-        <a id=update class="btn btn-a btn-sm smooth" href="#" onclick = "myFunction();">Update</a>
+        <a id=update class="btn btn-a btn-sm smooth" href="#" style="margin-left: 1em;" onclick = "myFunction();">Cheers!</a>
         </div>
         <div class="col c6" id="preview">
-        preview area placeholder. id:preview
+        A preview of your video player will appear here. 
         </div>
     </div>
     <div class=row>
@@ -60,10 +57,8 @@
           var input = document.getElementById("inputbar").value;
           var inputwidth = document.getElementById('width').value;
           var inputheight = document.getElementById('height').value;
-          var cb = document.getElementById('width100').value;
           
-          var embedCode = processInput(input, inputwidth, inputheight, cb);
-          document.getElementById("codebar").value = embedCode;
+          processInput(input, inputwidth, inputheight);
         }
       </script>
       

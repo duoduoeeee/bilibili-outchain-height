@@ -9,8 +9,7 @@ function makeid() {
 }
 
 
-
-function processInput(bar, width, height, cbstate){
+function processInput(bar, width, height){
 
 //some lovable regex
 var patternVideo = new RegExp(".+/av[0-9]{5,}"); //是视频
@@ -18,23 +17,6 @@ var patternVideoShort = new RegExp(".*acg\.tv\/[0-9]{5,}"); //是短链接式视
 
 var isvideo = patternVideo.test(bar);
 var issvideo = patternVideoShort.test(bar);
-
-//javascript class to make requests so that video cids are retrieved.
-//see https://stackoverflow.com/questions/247483/http-get-request-in-javascript
-var HttpClient = function() {
-    this.get = function(aUrl, aCallback) {
-        var anHttpRequest = new XMLHttpRequest();
-        anHttpRequest.withCredentials = true;
-        anHttpRequest.open(this.method, this.url, true);
-        anHttpRequest.onreadystatechange = function() { 
-            if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
-                aCallback(anHttpRequest.responseText);
-        }
-
-        anHttpRequest.open( "GET", aUrl, true );            
-        anHttpRequest.send( null );
-    }
-}
 
 //to determine whether the regex ran successfully
 if (isvideo === true || issvideo === true) { //是视频
@@ -61,7 +43,7 @@ if (whichP) {
 
     arraynum = whichP[1];
 } else {
-    arraynum = "";
+    arraynum = "1";
 }
 ////debugging
 console.log(whichP);
@@ -71,18 +53,59 @@ console.log(arraynum);
 var requestURL = 'api.php?aid=' + uid + '&p=' + arraynum;
 var idn = makeid();
 var idcf = idn;
-var client = new HttpClient();
-client.get(requestURL, function(response) {
-    var object = JSON.parse(response);
-    var cid = object.cid;
-});
 
-var preOutput = "<iframe id=" + idcf + " src=\"//player.bilibili.com/player.html?aid=" + uid + "&cid=" + cid + "&page=" + arraynum + " scrolling=\"no\" border=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\"> </iframe>"
+//autoselect
+if (document.getElementById("height").focus) {
+    document.getElementById("height").select();
+    document.getElementById("width").value = "";
+}
+
+if (document.getElementById("width").focus) {
+    document.getElementById("width").select();
+    document.getElementById("height").value = "";
+}
+
+if (document.getElementById("codebar").focus) {
+    document.getElementById("codebar").select();
+}
+
+//process width and height
+if (height == "" && width) {
+    var height = width/9*6;
+    document.getElementById("height").value = height;
+} else if (width == "" && height) {
+    var width = height/6*9;
+    document.getElementById("width").value = width;
+} else if (width == "" && height == "") {
+    var width = 846;
+    var height = 568;
+    document.getElementById("height").value = height;
+    document.getElementById("width").value = width;
+}
+
+console.log("height: " + height);
+console.log("width: " + width);
+
+//make http requests. 
+//referring to https://www.kirupa.com/html5/making_http_requests_js.htm.
+var makeHttpRequest = new XMLHttpRequest();
+makeHttpRequest.open('GET', requestURL, true);
+makeHttpRequest.send();
+makeHttpRequest.onreadystatechange = processRequest;
+
+function processRequest(e) {
+    if (makeHttpRequest.readyState == 4 && makeHttpRequest.status == 200) {
+        var cid = JSON.parse(makeHttpRequest.responseText);
+        console.log(cid.cid);
+        var embedCode = "<iframe id=" + idcf + " src=\"//player.bilibili.com/player.html?aid=" + uid + "&cid=" + cid.cid + "&page=" + arraynum + " scrolling=\"no\" border=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\"" + " style=\"width: " + width + "px; height: " + height + "px; max-width: 100%" + "\"> </iframe>";
+        document.getElementById("codebar").value = embedCode;
+        document.getElementById("preview").innerHTML = embedCode;
+    }
+}
 }
 
 else {
-  var preOutput = "Invalid URL. Try again. Bangumis are not supported by far.";
+  var embedCode = "Invalid URL. Try again. Bangumis are not supported by far.";
+  document.getElementById("codebar").value = embedCode;
 }
-//绘制 html
-return preOutput;
 }
