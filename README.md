@@ -5,6 +5,10 @@ missing autoheight tool for bilibili outchain player.
 
 This is a small tool for you to properly and elegantly utilize the official html5 outchain player by bilibili.
 
+This project implements the following open source software:
+
+- [min](https://github.com/owenversteeg/min)
+
 As you will discover, now Bilibili's html5 player doesn't provide the function of automatically adjusting width and height of its media player, rendering it virtually unusable in production - the width and height are all default values of its parent iframe.
 
 So here is the right tool to make Bilibili great again!
